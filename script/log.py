@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from glob import iglob
 from typing import Union
 import numpy as np
+from matplotlib import pyplot as plt
 from . import parameter as param
 
 SENSOR_LIST = ("ACC", "GYRO")
@@ -67,3 +68,20 @@ class Log:
     def export_to_pkl(self, file_name) -> None:
         with open(file_name[:-4] + ".pkl", "wb") as f:
             pickle.dump((self.ts, self.val), f)
+
+    def vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
+        if begin is None:
+            begin = self.ts[0]
+        if end is None:
+            end = self.ts[-1]
+
+        titles = ("X", "Y", "Z")
+        axes: np.ndarray = plt.subplots(nrows=4 * len(SENSOR_LIST), figsize=(16, 16 * len(SENSOR_LIST)))[1]
+        for i, s in enumerate(SENSOR_LIST):
+            for j in range(3):
+                axes[4*i+j].set_title(s + "_" + titles[j])
+                axes[4*i+j].set_xlim((begin, end))
+                axes[4*i+j].plot(self.ts, self.val[:, 3*i+j])
+            axes[4*i+3].set_title(s + "_" + "NORM")
+            axes[4*i+3].set_xlim((begin, end))
+            axes[4*i+3].plot(self.ts, np.linalg.norm(self.val[:, 3*i:3*i+3], axis=1))
