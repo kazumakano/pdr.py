@@ -117,7 +117,7 @@ class DistEstimator:
             end = self.ts[-1]
 
         axes: np.ndarray = plt.subplots(nrows=3, figsize=(16, 12))[1]
-        vis_dict = {"step": self.step, "speed": self.speed, "dist": self.dist}
+        vis_dict = {"step": self.step, "speed": self.speed, "distance": self.dist}
         for i, k in enumerate(vis_dict):
             axes[i].set_title(k)
             axes[i].set_xlim((begin, end))
