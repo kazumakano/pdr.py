@@ -18,7 +18,7 @@ class Log:
             raise Exception("log.py: log range is wrong")
 
         self.ts = np.empty(0, dtype=datetime)                               # timestamp
-        self.val = np.empty((0, 3 * len(SENSOR_LIST)), dtype=np.float64)    # values of 3 axes
+        self.val = np.empty((0, 3 * len(SENSOR_LIST)), dtype=np.float64)    # values of SENSOR_LIST * (x, y, z)
 
         if file_name is not None:    # file name is specified
             if file_name[-4:] == ".csv":
@@ -59,6 +59,7 @@ class Log:
 
         print(f"log.py: log length is {len(self.ts)}")
 
+    # sort by timestamp
     def _sort(self) -> None:
         sorted_indexes = self.ts.argsort()
 
