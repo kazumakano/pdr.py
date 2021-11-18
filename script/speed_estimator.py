@@ -95,8 +95,8 @@ class SpeedEstimator:
         return self.last_speed, step_is_detected
 
     def init_vis(self) -> None:
-        self.speed = np.empty(len(self.ts), dtype=np.float64)
         self.step = np.empty(len(self.ts), dtype=bool)
+        self.speed = np.empty(len(self.ts), dtype=np.float64)
         self.dist = np.empty(len(self.ts), dtype=np.float64)
 
         for i in range(len(self.ts)):
@@ -118,7 +118,7 @@ class SpeedEstimator:
             end = self.ts[-1]
 
         axes: np.ndarray = plt.subplots(nrows=3, figsize=(16, 12))[1]
-        vis_dict = {"speed": self.speed, "step": self.step, "dist": self.dist}
+        vis_dict = {"step": self.step, "speed": self.speed, "dist": self.dist}
         for i, k in enumerate(vis_dict):
             axes[i].set_title(k)
             axes[i].set_xlim((begin, end))
