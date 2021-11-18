@@ -12,7 +12,7 @@ END_STATE = np.int8(4)
 DETECT_STATE = np.int8(5)
 FREQ = np.uint8(100)
 
-class SpeedEstimator:
+class DistEstimator:
     def __init__(self, ts: np.ndarray, acc: np.ndarray) -> None:
         global STEP_LEN
 
@@ -25,6 +25,7 @@ class SpeedEstimator:
         self.last_state_trans_time_index: int = 0      # index of last time when state transitioned
         self.last_step_time_index: int = 0             # index of last time when step was detected
         self.last_speed = np.float64(0)                # speed at last time [meter/second]
+        self.last_dist = np.float64(0)                 # cumulative movement distance until last time [meter]
 
     # update state and detect step with automaton
     def _detect_step(self, current_time_index: int) -> bool:
@@ -77,7 +78,7 @@ class SpeedEstimator:
         
         return is_detected
 
-    # estimate speed by automaton based step detection
+    # estimate movement distance by step detection
     def estim(self, current_time_index: int) -> Tuple[np.float64, bool]:
         step_is_detected = self._detect_step(current_time_index)
 
@@ -92,7 +93,9 @@ class SpeedEstimator:
                 self.last_speed: np.float64 = STEP_LEN / (interval.seconds + interval.microseconds / 1000000)
             self.last_step_time_index = current_time_index    # update last_step_time_index
 
-        return self.last_speed, step_is_detected
+        self.last_dist += self.last_speed / FREQ
+
+        return self.last_dist, self.last_speed, step_is_detected
 
     def init_vis(self) -> None:
         self.step = np.empty(len(self.ts), dtype=bool)
@@ -100,17 +103,13 @@ class SpeedEstimator:
         self.dist = np.empty(len(self.ts), dtype=np.float64)
 
         for i in range(len(self.ts)):
-            self.speed[i], self.step[i] = self.estim(i)
-            if i == 0:
-                self.dist[i] = self.speed[i] / FREQ
-            else:
-                self.dist[i] = self.dist[i - 1] + self.speed[i] / FREQ
+            self.dist[i], self.speed[i], self.step[i] = self.estim(i)
 
-        print("speed_estimator.py: speed visualizer has been initialized")
+        print("distance_estimator.py: distance visualizer has been initialized")
 
     def run_vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
-        if not hasattr(self, "speed"):
-            raise Exception("speed_estimator.py: speed visualizer has not been initialized yet")
+        if not hasattr(self, "dist"):
+            raise Exception("distance_estimator.py: distance visualizer has not been initialized yet")
 
         if begin is None:
             begin = self.ts[0]
