@@ -3,7 +3,7 @@ import os.path as path
 import pickle
 from datetime import datetime, timedelta
 from glob import iglob
-from typing import Union
+from typing import Any, Union
 import numpy as np
 from matplotlib import pyplot as plt
 from . import parameter as param
@@ -69,7 +69,7 @@ class Log:
         with open(file_name[:-4] + ".pkl", "wb") as f:
             pickle.dump((self.ts, self.val), f)
 
-    def vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
+    def vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None, enable_lim: bool = False, component_lim: Any = (-1, 1), norm_lim: Any = (0, 2)) -> None:
         if begin is None:
             begin = self.ts[0]
         if end is None:
@@ -81,7 +81,11 @@ class Log:
             for j in range(3):
                 axes[4*i+j].set_title(s + "_" + titles[j])
                 axes[4*i+j].set_xlim((begin, end))
+                if enable_lim:
+                    axes[4*i+j].set_ylim(component_lim)
                 axes[4*i+j].plot(self.ts, self.val[:, 3*i+j])
             axes[4*i+3].set_title(s + "_" + "NORM")
             axes[4*i+3].set_xlim((begin, end))
+            if enable_lim:
+                axes[4*i+3].set_ylim(norm_lim)
             axes[4*i+3].plot(self.ts, np.linalg.norm(self.val[:, 3*i:3*i+3], axis=1))
