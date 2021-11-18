@@ -4,10 +4,10 @@ import numpy as np
 import yaml
 
 
-def _set_log_params(conf: dict) -> None:
-    global WIN_SIZE
+def _set_direct_params(conf: dict) -> None:
+    global DRIFT
 
-    WIN_SIZE = int(conf["win_size"])                             # size of sliding window [second]
+    DRIFT = np.float16(conf["gyro_drift"])                       # drift value of gyroscope [degree/second]
 
 def _set_dist_params(conf: dict) -> None:
     global STEP_LEN_COEF, STATURE, DEFAULT_SPEED, BEGIN_THRESH, POS_PEAK_THRESH, NEG_PEAK_THRESH, END_THRESH, MIN_STEP_INTERVAL, MAX_STATE_INTERVAL
@@ -23,10 +23,10 @@ def _set_dist_params(conf: dict) -> None:
     MIN_STEP_INTERVAL = float(conf["min_step_interval"])         # minimum interval from last step to detect new step [second]
     MAX_STATE_INTERVAL = float(conf["max_state_interval"])       # maximum interval from last state transition to recognize as moving [second]
 
-def _set_direct_params(conf: dict) -> None:
-    global DRIFT
+def _set_log_params(conf: dict) -> None:
+    global WIN_SIZE
 
-    DRIFT = np.float16(conf["gyro_drift"])                       # drift value of gyroscope [degree/second]
+    WIN_SIZE = int(conf["win_size"])                             # size of sliding window [second]
 
 def set_params(conf_file: Union[str, None] = None) -> dict:
     global ROOT_DIR, IS_LOST
@@ -43,8 +43,8 @@ def set_params(conf_file: Union[str, None] = None) -> dict:
         conf: dict = yaml.safe_load(f)
     print(f"parameter.py: {path.basename(conf_file)} has been loaded")
 
-    _set_log_params(conf)
-    _set_dist_params(conf)
     _set_direct_params(conf)
+    _set_dist_params(conf)
+    _set_log_params(conf)
 
     return conf
