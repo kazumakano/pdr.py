@@ -1,6 +1,6 @@
 import math
 from datetime import datetime
-from typing import Union
+from typing import Tuple, Union
 import numpy as np
 from matplotlib import pyplot as plt
 import script.parameter as param
@@ -14,16 +14,17 @@ class DirectEstimator:
 
         self.last_direct = np.float64(0)
 
-    def estim(self, current_time_index) -> np.float64:
-        self.last_direct += math.degrees(self.gyro[current_time_index, 1]) / FREQ - param.DRIFT    # integrate values of y axis
+    def estim(self, current_time_index) -> Tuple[np.float64, np.float64]:
+        angular_vel = np.float64(math.degrees(self.gyro[current_time_index, 1]))    # angular velocity of y axis
+        self.last_direct += angular_vel / FREQ - param.DRIFT    # integrate
 
-        return self.last_direct
+        return self.last_direct, angular_vel
 
     def init_vis(self) -> None:
-        self.direct = np.empty(len(self.ts), dtype=np.float64)
+        self.direct = np.empty(len(self.ts), dtype=np.float64)[0]
 
         for i in range(len(self.ts)):
-            self.direct[i] = self.estim(i)
+            self.direct[i] = self.estim(i)[0]
 
         print("direction_estimator.py: direction visualizer has been initialized")
 

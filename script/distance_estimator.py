@@ -79,7 +79,7 @@ class DistEstimator:
         return is_detected
 
     # estimate movement distance by step detection
-    def estim(self, current_time_index: int) -> Tuple[np.float64, bool]:
+    def estim(self, current_time_index: int) -> Tuple[np.float64, np.float64, bool]:
         step_is_detected = self._detect_step(current_time_index)
 
         if self.state == STOP_STATE:
