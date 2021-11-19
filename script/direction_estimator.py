@@ -4,8 +4,8 @@ from typing import Tuple, Union
 import numpy as np
 from matplotlib import pyplot as plt
 import script.parameter as param
+from script.log import FREQ
 
-FREQ = np.uint8(100)
 
 class DirectEstimator:
     def __init__(self, ts: np.ndarray, gyro: np.ndarray) -> None:

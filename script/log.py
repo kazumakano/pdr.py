@@ -9,6 +9,7 @@ from matplotlib import pyplot as plt
 from . import parameter as param
 
 SENSOR_LIST = ("ACC", "GYRO")
+FREQ = np.uint8(100)
 
 class Log:
     def __init__(self, file_name: Union[str, None] = None, begin: Union[datetime, None] = None , end: Union[datetime, None] = None) -> None:

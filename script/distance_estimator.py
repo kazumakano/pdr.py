@@ -3,6 +3,7 @@ from typing import Tuple, Union
 import numpy as np
 from matplotlib import pyplot as plt
 import script.parameter as param
+from script.log import FREQ
 
 STOP_STATE = np.int8(0)
 BEGIN_STATE = np.int8(1)
@@ -10,7 +11,6 @@ POS_PEAK_STATE = np.int8(2)
 NEG_PEEK_STATE = np.int8(3)
 END_STATE = np.int8(4)
 DETECT_STATE = np.int8(5)
-FREQ = np.uint8(100)
 
 class DistEstimator:
     def __init__(self, ts: np.ndarray, acc: np.ndarray) -> None:
