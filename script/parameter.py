@@ -5,8 +5,9 @@ from particle_filter.script.parameter import set_params as set_pf_params
 
 
 def _set_direct_params(conf: dict) -> None:
-    global DRIFT
+    global ROTATE_AX, DRIFT
 
+    ROTATE_AX = np.int8(conf["rotate_ax"])                       # 1: +x, 2: -x, 3: +y, 4: -y, 5: +z, 6: -z (+y is tipical)
     DRIFT = np.float16(conf["gyro_drift"])                       # drift value of gyroscope [degree/second]
 
 def _set_dist_params(conf: dict) -> None:
