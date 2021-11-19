@@ -18,3 +18,12 @@ class Map(PfMap):
                 self.file_name = pf_util.gen_file_name()    # generate file name if unspecified
             else:
                 self.file_name = pf_param.FILE_NAME
+    
+    def draw_any_pos(self, pos: np.ndarray) -> None:
+        if pf_param.ENABLE_CLEAR:
+            self.clear()
+        try:
+            super().draw_any_pos(pos, (0, 0, 255))
+        except:
+            print("map.py: error occurred when drawimg position")
+            print(f"map.py: position is {pos}")
