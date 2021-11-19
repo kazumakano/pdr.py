@@ -1,4 +1,2 @@
 config/
-log/observed/
-log/truth/
-truth/
+log/

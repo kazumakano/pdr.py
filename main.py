@@ -26,7 +26,7 @@ def _set_main_params(conf: dict) -> None:
 
 def pdr() -> None:
     if FILE_RANGE_POLICY in (1, 2):    # file name
-        log = Log(file_name=param.ROOT_DIR + "log/observed/" + LOG_FILE)
+        log = Log(file_name=param.ROOT_DIR + "log/" + LOG_FILE)
         if FILE_RANGE_POLICY == 2:
             log.slice_self(BEGIN, END)
     elif FILE_RANGE_POLICY == 3:       # range

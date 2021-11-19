@@ -7,7 +7,7 @@ from script.parameter import set_params
 
 def prepare_log_pkls(src_file: str) -> None:
     if src_file is None:
-        for src_file in iglob(param.ROOT_DIR + "log/observed/*.csv"):
+        for src_file in iglob(param.ROOT_DIR + "log/*.csv"):
             Log(file_name=src_file).export_to_pkl(src_file)
 
     else:
