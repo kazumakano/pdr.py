@@ -21,7 +21,7 @@ class DirectEstimator:
         return self.last_direct, angular_vel
 
     def init_vis(self) -> None:
-        self.direct = np.empty(len(self.ts), dtype=np.float64)[0]
+        self.direct = np.empty(len(self.ts), dtype=np.float64)
 
         for i in range(len(self.ts)):
             self.direct[i] = self.estim(i)[0]
