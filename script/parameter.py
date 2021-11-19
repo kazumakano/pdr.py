@@ -1,7 +1,7 @@
 import os.path as path
 from typing import Union
 import numpy as np
-import yaml
+from particle_filter.script.parameter import set_params as set_pf_params
 
 
 def _set_direct_params(conf: dict) -> None:
@@ -14,7 +14,7 @@ def _set_dist_params(conf: dict) -> None:
 
     STEP_LEN_COEF = np.float16(conf["step_len_coef"])            # ratio of step length to stature
     STATURE = np.float16(conf["stature"])                        # subject's stature [meter]
-    DEFAULT_SPEED = np.float16(conf["default_speed"])            # default subject's speed [meter/second]
+    DEFAULT_SPEED = np.float64(conf["default_speed"])            # default subject's speed [meter/second]
 
     BEGIN_THRESH = np.float16(conf["step_begin_acc_thresh"])     # threshold values of acceleration [G]
     POS_PEAK_THRESH = np.float16(conf["pos_peak_acc_thresh"])
@@ -39,10 +39,7 @@ def set_params(conf_file: Union[str, None] = None) -> dict:
     else:
         conf_file = conf_file
 
-    with open(conf_file) as f:
-        conf: dict = yaml.safe_load(f)
-    print(f"parameter.py: {path.basename(conf_file)} has been loaded")
-
+    conf = set_pf_params(conf_file)
     _set_direct_params(conf)
     _set_dist_params(conf)
     _set_log_params(conf)
