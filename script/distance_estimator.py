@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from typing import Tuple, Union
 import numpy as np
 from matplotlib import pyplot as plt
-import script.parameter as param
-from script.log import FREQ
+from . import parameter as param
+from .log import FREQ
 
 STOP_STATE = np.int8(0)
 BEGIN_STATE = np.int8(1)
