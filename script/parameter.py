@@ -26,13 +26,12 @@ def _set_dist_params(conf: dict) -> None:
 def _set_log_params(conf: dict) -> None:
     global WIN_SIZE
 
-    WIN_SIZE = int(conf["win_size"])                             # size of sliding window [second]
+    WIN_SIZE = float(conf["pdr_win_size"])                       # size of window for calculating speed and angular velocity [second]
 
 def set_params(conf_file: Union[str, None] = None) -> dict:
-    global ROOT_DIR, IS_LOST
+    global ROOT_DIR
 
     ROOT_DIR = path.dirname(__file__) + "/../"                   # project root directory
-    IS_LOST = False                                              # subject is lost or not
 
     if conf_file is None:
         conf_file = ROOT_DIR + "config/default.yaml"    # load default config file if not specified
