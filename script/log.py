@@ -66,6 +66,30 @@ class Log:
 
         self.ts = self.ts[sorted_indexes]
         self.val = self.val[sorted_indexes]
+    
+    def slice_self(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
+        if begin is None and end is None:
+            raise Warning("log.py: specify range in order to slice log")
+        elif begin is not None and end is not None and begin > end:
+            raise Exception("log.py: log range is wrong")
+
+        if begin is not None:
+            slice_time_index = len(self.ts)
+            for i, t in enumerate(self.ts):
+                if t >= begin - timedelta(seconds=(param.WIN_SIZE - 1 / FREQ)):    # WIN_SIZE must be longer than 1 / FREQ
+                    slice_time_index = i
+                    break
+            self.ts = self.ts[slice_time_index:]
+            self.val = self.val[slice_time_index:]
+
+        if end is not None:
+            slice_time_index = -1
+            for i, t in enumerate(self.ts):
+                if t > end:
+                    slice_time_index = i
+                    break
+            self.ts = self.ts[:slice_time_index]
+            self.val = self.val[:slice_time_index]
 
     def export_to_pkl(self, file_name) -> None:
         with open(file_name[:-4] + ".pkl", "wb") as f:
