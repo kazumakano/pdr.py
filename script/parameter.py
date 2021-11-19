@@ -27,6 +27,7 @@ def _set_log_params(conf: dict) -> None:
     global WIN_SIZE
 
     WIN_SIZE = float(conf["pdr_win_size"])                       # size of window for calculating speed and angular velocity [second]
+                                                                 # window disabled if 0
 
 def set_params(conf_file: Union[str, None] = None) -> dict:
     global ROOT_DIR

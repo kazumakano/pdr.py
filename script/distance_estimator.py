@@ -97,6 +97,15 @@ class DistEstimator:
 
         return self.last_dist, self.last_speed, step_is_detected
 
+    def get_speed_mean(self, current_time_index: int) -> np.float64:
+        win_len = int(param.WIN_SIZE * FREQ)
+        speed = np.empty(win_len, dtype=np.float64)
+        
+        for i in range(win_len):
+            speed[i] = self.estim(current_time_index - i)
+        
+        return speed.mean()
+
     def init_vis(self) -> None:
         self.step = np.empty(len(self.ts), dtype=bool)
         self.speed = np.empty(len(self.ts), dtype=np.float64)
