@@ -101,7 +101,7 @@ class DistEstimator:
         win_len = int(param.WIN_SIZE * FREQ)
         speed = np.empty(win_len, dtype=np.float64)
         
-        for i in range(win_len):
+        for i in reversed(range(win_len)):
             speed[i] = self.estim(current_time_index - i)[1]
         
         return speed.mean()

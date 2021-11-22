@@ -63,7 +63,7 @@ def pdr() -> None:
             turtle.forward(speed * param.WIN_SIZE)
 
             angular_vel = director.get_win_angular_vel(i)
-            turtle.right(angular_vel * param.WIN_SIZE)
+            turtle.right((angular_vel - director.sign * param.DRIFT) * param.WIN_SIZE)
 
             map.draw_any_pos(turtle.pos)
             map.show()

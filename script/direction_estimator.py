@@ -9,22 +9,22 @@ from .log import FREQ
 
 class DirectEstimator:
     def __init__(self, ts: np.ndarray, gyro: np.ndarray) -> None:
-        global SIGN, AX_INDEX
+        global AX_INDEX
 
-        if param.ROTATE_AX // 2 == 1:
-            SIGN = 1     # positive
-        else:
-            SIGN = -1    # negative
         AX_INDEX = (param.ROTATE_AX - 1) // 2
 
         self.ts = ts
         self.gyro = np.hstack((gyro, np.linalg.norm(gyro, axis=1)[:, np.newaxis]))
 
+        if param.ROTATE_AX // 2 == 1:
+            self.sign = 1     # positive
+        else:
+            self.sign = -1    # negative
         self.last_direct = np.float64(0)
 
     def estim(self, current_time_index: int) -> Tuple[np.float64, np.float64]:
-        angular_vel = SIGN * np.float64(math.degrees(self.gyro[current_time_index, AX_INDEX]))
-        self.last_direct += angular_vel / FREQ - (SIGN * param.DRIFT)    # integrate
+        angular_vel = self.sign * np.float64(math.degrees(self.gyro[current_time_index, AX_INDEX]))
+        self.last_direct += (angular_vel - self.sign * param.DRIFT) / FREQ    # integrate
 
         return self.last_direct, angular_vel
     
@@ -32,7 +32,7 @@ class DirectEstimator:
         win_len = int(param.WIN_SIZE * FREQ)
         angular_vel = np.empty(win_len, dtype=np.float64)
         
-        for i in range(win_len):
+        for i in reversed(range(win_len)):
             angular_vel[i] = self.estim(current_time_index - i)[1]
         
         return angular_vel.mean()
