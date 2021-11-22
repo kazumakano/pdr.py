@@ -59,10 +59,10 @@ def pdr() -> None:
         for i in range(win_len - 1, len(log.ts), win_len):
             print(f"main.py: {log.ts[i].time()}")
 
-            speed = pf_util.conv_from_meter_to_pixel(distor.get_speed_mean(i), map.resolution)
+            speed = pf_util.conv_from_meter_to_pixel(distor.get_win_speed(i), map.resolution)
             turtle.forward(speed * param.WIN_SIZE)
 
-            angular_vel = director.get_angular_vel_mean(i)
+            angular_vel = director.get_win_angular_vel(i)
             turtle.right(angular_vel * param.WIN_SIZE)
 
             map.draw_any_pos(turtle.pos)

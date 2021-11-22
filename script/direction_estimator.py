@@ -28,7 +28,7 @@ class DirectEstimator:
 
         return self.last_direct, angular_vel
     
-    def get_angular_vel_mean(self, current_time_index: int) -> np.float64:
+    def get_win_angular_vel(self, current_time_index: int) -> np.float64:
         win_len = int(param.WIN_SIZE * FREQ)
         angular_vel = np.empty(win_len, dtype=np.float64)
         
