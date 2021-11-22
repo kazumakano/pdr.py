@@ -1,4 +1,7 @@
-import os.path as path
+from sys import path as sys_path
+sys_path.append("..")
+
+import os.path
 from typing import Union
 import numpy as np
 from particle_filter.script.parameter import set_params as set_pf_params
@@ -34,7 +37,7 @@ def _set_log_params(conf: dict) -> None:
 def set_params(conf_file: Union[str, None] = None) -> dict:
     global ROOT_DIR
 
-    ROOT_DIR = path.dirname(__file__) + "/../"                   # project root directory
+    ROOT_DIR = os.path.dirname(__file__) + "/../"                   # project root directory
 
     if conf_file is None:
         conf_file = ROOT_DIR + "config/default.yaml"    # load default config file if not specified
