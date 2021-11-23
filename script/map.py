@@ -19,7 +19,7 @@ class Map(PfMap):
             else:
                 self.file_name = pf_param.FILE_NAME
     
-    def draw_any_pos(self, pos: np.ndarray) -> None:
+    def safe_draw_pos(self, pos: np.ndarray) -> None:
         if pf_param.ENABLE_CLEAR:
             self.clear()
         try:
