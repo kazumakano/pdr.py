@@ -1,3 +1,4 @@
+import os.path as path
 import cv2
 import numpy as np
 import particle_filter.script.parameter as pf_param
@@ -10,7 +11,7 @@ class Map(PfMap):
     def __init__(self) -> None:
         self.plain_img: np.ndarray = cv2.imread(pf_param.ROOT_DIR + "map/" + pf_param.IMG_FILE)
         self.img = self.plain_img.copy()    # deep copy
-        with open(pf_param.ROOT_DIR + "map/" + pf_param.CONF_FILE) as f:
+        with open(path.join(pf_param.ROOT_DIR, "map/", pf_param.CONF_FILE)) as f:
             self.resolution: float = yaml.safe_load(f)["resolution"]
         
         if pf_param.ENABLE_SAVE_VIDEO or pf_param.ENABLE_SAVE_IMG:

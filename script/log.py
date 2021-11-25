@@ -36,7 +36,7 @@ class Log:
             print(f"log.py: {path.basename(file_name)} has been loaded")
 
         else:                   # log range is specified
-            for file_name in iglob(param.ROOT_DIR + "log/*.csv"):
+            for file_name in iglob(path.join(param.ROOT_DIR, "log/*.csv")):
                 log_date = datetime.strptime(path.basename(file_name).split("_")[0], "%Y-%m-%d").date()
 
                 if begin.date() <= log_date <= end.date():
