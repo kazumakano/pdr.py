@@ -50,7 +50,7 @@ def pdr() -> None:
             angular_vel = director.estim(i)[1]
             turtle.right(angular_vel / FREQ)
 
-            map.safe_draw_pos(turtle.pos)
+            map.draw_pos(turtle.pos)
             map.show()
             if pf_param.ENABLE_SAVE_VIDEO:
                 map.record()
@@ -66,7 +66,7 @@ def pdr() -> None:
             angular_vel = director.get_win_angular_vel(i)
             turtle.right((angular_vel - director.sign * param.DRIFT) * param.WIN_SIZE)
 
-            map.safe_draw_pos(turtle.pos)
+            map.draw_pos(turtle.pos)
             map.show()
             if pf_param.ENABLE_SAVE_VIDEO:
                 map.record()
