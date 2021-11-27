@@ -118,7 +118,7 @@ class DistEstimator:
 
     def run_vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
         if not hasattr(self, "dist"):
-            raise Exception("distance_estimator.py: distance visualizer has not been initialized yet")
+            raise Exception("distance_estimator.py: distance visualizer hasn't been initialized yet")
 
         if begin is None:
             begin = self.ts[0]

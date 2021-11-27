@@ -48,7 +48,7 @@ class DirectEstimator:
 
     def run_vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
         if not hasattr(self, "direct"):
-            raise Exception("direction_estimator.py: direction visualizer has not been initialized yet")
+            raise Exception("direction_estimator.py: direction visualizer hasn't been initialized yet")
 
         if begin is None:
             begin = self.ts[0]
