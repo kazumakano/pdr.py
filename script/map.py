@@ -23,4 +23,4 @@ class Map(PfMap):
     def draw_pos(self, pos: np.ndarray) -> None:
         if pf_param.ENABLE_CLEAR:
             self.clear()
-        super().draw_any_pos(pos, (0, 0, 255))
+        self.draw_any_pos(pos, (0, 0, 255))
