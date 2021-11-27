@@ -38,8 +38,6 @@ def set_params(conf_file: Union[str, None] = None) -> dict:
 
     if conf_file is None:
         conf_file = path.join(ROOT_DIR, "config/default.yaml")    # load default config file if not specified
-    else:
-        conf_file = conf_file
 
     conf = set_pf_params(conf_file)
     _set_direct_params(conf)

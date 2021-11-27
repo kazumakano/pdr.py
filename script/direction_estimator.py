@@ -22,6 +22,7 @@ class DirectEstimator:
             self.sign = -1    # negative
         self.last_direct = np.float64(0)
 
+    # estimate direction by integral
     def estim(self, current_time_index: int) -> Tuple[np.float64, np.float64]:
         angular_vel = self.sign * np.float64(math.degrees(self.gyro[current_time_index, AX_INDEX]))
         self.last_direct += (angular_vel - self.sign * param.DRIFT) / FREQ    # integrate
