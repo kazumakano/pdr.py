@@ -1,13 +1,11 @@
-# log
-file_range_policy: 1
-log_file: 2000-01-01_sample.pkl
-pdr_win_size: 0.1
+# direction
+rotate_ax: 3
+gyro_drift: 0
 
 # distance
 step_len_coef: 0.42
 stature: 1.7
 default_speed: 1
-
 step_begin_acc_thresh: 1.05
 pos_peak_acc_thresh: 1.11
 neg_peak_acc_thresh: 0.93
@@ -16,9 +14,10 @@ min_step_interval: 0.5
 max_state_interval: 0.5
 max_step_interval: 2
 
-# direction
-rotate_ax: 3
-gyro_drift: 0
+# log
+file_range_policy: 1
+log_file: 2000-01-01_sample.pkl
+pdr_win_size: 0.1
 
 # particle_filter
 begin: "2000-01-01 00:00:00"
