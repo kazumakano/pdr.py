@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 from . import parameter as param
 
 SENSOR_LIST = ("ACC", "GYRO")
-FREQ = np.float16(100)
+FREQ = 100
 
 class Log:
     def __init__(self, file_name: Union[str, None] = None, begin: Union[datetime, None] = None , end: Union[datetime, None] = None) -> None:
@@ -35,7 +35,7 @@ class Log:
 
             print(f"log.py: {path.basename(file_name)} has been loaded")
 
-        else:                   # log range is specified
+        else:                        # log range is specified
             for file_name in iglob(path.join(param.ROOT_DIR, "log/*.csv")):
                 log_date = datetime.strptime(path.basename(file_name).split("_")[0], "%Y-%m-%d").date()
 
@@ -62,7 +62,7 @@ class Log:
 
     # sort by timestamp
     def _sort(self) -> None:
-        sorted_indexes = self.ts.argsort()
+        sorted_indexes: np.ndarray = self.ts.argsort()
 
         self.ts = self.ts[sorted_indexes]
         self.val = self.val[sorted_indexes]
@@ -91,11 +91,11 @@ class Log:
             self.ts = self.ts[:slice_time_index]
             self.val = self.val[:slice_time_index]
 
-    def export_to_pkl(self, file_name) -> None:
+    def export_to_pkl(self, file_name: str) -> None:
         with open(file_name[:-4] + ".pkl", "wb") as f:
             pickle.dump((self.ts, self.val), f)
 
-    def vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None, enable_lim: bool = False, component_lim: Any = (-1, 1), norm_lim: Any = (0, 2)) -> None:
+    def vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None, enable_lim: bool = False, components_lim: Any = (-1, 1), norm_lim: Any = (0, 2)) -> None:
         if begin is None:
             begin = self.ts[0]
         if end is None:
@@ -108,7 +108,7 @@ class Log:
                 axes[4*i+j].set_title(s + "_" + titles[j])
                 axes[4*i+j].set_xlim((begin, end))
                 if enable_lim:
-                    axes[4*i+j].set_ylim(component_lim)
+                    axes[4*i+j].set_ylim(components_lim)
                 axes[4*i+j].plot(self.ts, self.val[:, 3*i+j])
             axes[4*i+3].set_title(s + "_" + "NORM")
             axes[4*i+3].set_xlim((begin, end))

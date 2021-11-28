@@ -12,15 +12,15 @@ class Map(PfMap):
         self.plain_img: np.ndarray = cv2.imread(path.join(pf_param.ROOT_DIR, "map/", pf_param.IMG_FILE))
         self.img = self.plain_img.copy()
         with open(path.join(pf_param.ROOT_DIR, "map/", pf_param.CONF_FILE)) as f:
-            self.resolution = float(yaml.safe_load(f)["resolution"])
-        
+            self.resolution = np.float16(yaml.safe_load(f)["resolution"])
+
         if pf_param.ENABLE_SAVE_IMG or pf_param.ENABLE_SAVE_VIDEO:
             if pf_param.FILE_NAME is None:
                 self.file_name = pf_util.gen_file_name()
             else:
                 self.file_name = pf_param.FILE_NAME
-    
+
     def draw_pos(self, pos: np.ndarray) -> None:
         if pf_param.ENABLE_CLEAR:
             self.clear()
-        self.draw_any_pos(pos, (0, 0, 255))
+        self._draw_any_pos(pos, (0, 0, 255))

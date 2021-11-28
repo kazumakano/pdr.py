@@ -15,7 +15,7 @@ def _set_dist_params(conf: dict) -> None:
 
     STEP_LEN_COEF = np.float16(conf["step_len_coef"])            # ratio of step length to stature
     STATURE = np.float16(conf["stature"])                        # subject's stature [meter]
-    DEFAULT_SPEED = np.float64(conf["default_speed"])            # default subject's speed [meter/second]
+    DEFAULT_SPEED = np.float16(conf["default_speed"])            # default subject's speed [meter/second]
 
     BEGIN_THRESH = np.float16(conf["step_begin_acc_thresh"])     # threshold values of acceleration [G]
     POS_PEAK_THRESH = np.float16(conf["pos_peak_acc_thresh"])
