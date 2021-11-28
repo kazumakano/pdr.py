@@ -1,13 +1,15 @@
 import argparse
+import os.path as path
 from glob import iglob
+from typing import Union
 import script.parameter as param
 from script.log import Log
 from script.parameter import set_params
 
 
-def prepare_log_pkls(src_file: str) -> None:
+def prepare_log_pkls(src_file: Union[str, None] = None) -> None:
     if src_file is None:
-        for src_file in iglob(param.ROOT_DIR + "log/*.csv"):
+        for src_file in iglob(path.join(param.ROOT_DIR, "log/*.csv")):
             Log(file_name=src_file).export_to_pkl(src_file)
 
     else:
