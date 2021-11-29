@@ -22,8 +22,8 @@ def _set_main_params(conf: dict) -> None:
     LOG_FILE = str(conf["log_file"])                                 # log file name
     BEGIN = datetime.strptime(conf["begin"], "%Y-%m-%d %H:%M:%S")    # log range
     END = datetime.strptime(conf["end"], "%Y-%m-%d %H:%M:%S")
-    INIT_POS = np.array(conf["init_pos"], dtype=np.float64)          # initial position [pixel]
-    INIT_DIRECT = np.float64(conf["init_direct"])                    # initial direction [degree]
+    INIT_POS = np.array(conf["init_pos"], dtype=np.float16)          # initial position [pixel]
+    INIT_DIRECT = np.float16(conf["init_direct"])                    # initial direction [degree]
 
 def pdr() -> None:
     if FILE_RANGE_POLICY in (1, 2):    # file name
