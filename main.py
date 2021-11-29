@@ -16,8 +16,8 @@ from script.turtle import Turtle
 def _set_main_params(conf: dict) -> None:
     global FILE_RANGE_POLICY, LOG_FILE, BEGIN, END, INIT_POS, INIT_DIRECT
 
-    FILE_RANGE_POLICY = np.int8(conf["file_range_policy"])           # 1: set log by file name
-                                                                     # 2: set log by file name and slice by range
+    FILE_RANGE_POLICY = np.int8(conf["file_range_policy"])           # 1: set log by file and range
+                                                                     # 2: set log by file
                                                                      # 3: set log by range
     LOG_FILE = str(conf["log_file"])                                 # log file name
     BEGIN = datetime.strptime(conf["begin"], "%Y-%m-%d %H:%M:%S")    # log range
@@ -26,11 +26,11 @@ def _set_main_params(conf: dict) -> None:
     INIT_DIRECT = np.float16(conf["init_direct"])                    # initial direction [degree]
 
 def pdr() -> None:
-    if FILE_RANGE_POLICY in (1, 2):    # file name
-        log = Log(file_name=path.join(param.ROOT_DIR, "log/", LOG_FILE))
-        if FILE_RANGE_POLICY == 2:
-            log.slice_self(BEGIN, END)
-    elif FILE_RANGE_POLICY == 3:       # range
+    if FILE_RANGE_POLICY == 1:
+        log = Log(file=LOG_FILE, begin=BEGIN, end=END)
+    elif FILE_RANGE_POLICY == 2:
+        log = Log(file=LOG_FILE)
+    elif FILE_RANGE_POLICY == 3:
         log = Log(begin=BEGIN, end=END)
     map = Map()
     turtle = Turtle(INIT_POS, INIT_DIRECT)
