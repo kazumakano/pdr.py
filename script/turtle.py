@@ -4,7 +4,7 @@ import numpy as np
 
 class Turtle:
     def __init__(self, init_pos: np.ndarray, init_heading: np.float16) -> None:
-        self.pos = init_pos
+        self.pos = init_pos.astype(np.float64)
         self.heading = init_heading
     
     # move forward
