@@ -21,60 +21,60 @@ class DistEstimator:
         self.ts = ts
         self.acc = np.hstack((acc, np.linalg.norm(acc, axis=1)[:, np.newaxis]))
 
-        self.state = STOP_STATE                 # state at automaton
-        self.last_state_trans_time_index = 0    # index of last time when state transitioned
+        self.status = STOP_STATE                # status at automaton
+        self.last_status_trans_time_index = 0    # index of last time when status transitioned
         self.last_step_time_index = 0           # index of last time when step was detected
         self.last_speed = 0                     # speed at last time [meter/second]
         self.last_dist = 0                      # cumulative movement distance until last time [meter]
 
-    # update state and detect step with automaton
+    # update status and detect step with automaton
     def _detect_step(self, current_time_index: int) -> bool:
         is_detected = False
 
-        if self.state == STOP_STATE:
+        if self.status == STOP_STATE:
             if self.acc[current_time_index, 3] > param.BEGIN_THRESH:
-                self.state = BEGIN_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = BEGIN_STATE
+                self.last_status_trans_time_index = current_time_index
 
-        elif self.state == BEGIN_STATE:
+        elif self.status == BEGIN_STATE:
             if self.acc[current_time_index, 3] < param.BEGIN_THRESH:
-                self.state = STOP_STATE
-                self.last_state_trans_time_index = current_time_index                
+                self.status = STOP_STATE
+                self.last_status_trans_time_index = current_time_index                
             elif self.acc[current_time_index, 3] > param.POS_PEAK_THRESH:
-                self.state = POS_PEAK_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = POS_PEAK_STATE
+                self.last_status_trans_time_index = current_time_index
 
-        elif self.state == POS_PEAK_STATE:
+        elif self.status == POS_PEAK_STATE:
             if self.acc[current_time_index, 3] < param.NEG_PEAK_THRESH:
-                self.state = NEG_PEEK_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = NEG_PEEK_STATE
+                self.last_status_trans_time_index = current_time_index
 
-        elif self.state == NEG_PEEK_STATE:    
+        elif self.status == NEG_PEEK_STATE:    
             if self.acc[current_time_index, 3] > param.NEG_PEAK_THRESH:
-                self.state = END_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = END_STATE
+                self.last_status_trans_time_index = current_time_index
 
-        elif self.state == END_STATE:
+        elif self.status == END_STATE:
             if self.acc[current_time_index, 3] < param.NEG_PEAK_THRESH:
-                self.state = NEG_PEEK_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = NEG_PEEK_STATE
+                self.last_status_trans_time_index = current_time_index
             elif self.acc[current_time_index, 3] > param.END_THRESH:
-                self.state = DETECT_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = DETECT_STATE
+                self.last_status_trans_time_index = current_time_index
 
-        elif self.state == DETECT_STATE:
+        elif self.status == DETECT_STATE:
             if self.acc[current_time_index, 3] < param.END_THRESH:
-                self.state = END_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = END_STATE
+                self.last_status_trans_time_index = current_time_index
             elif self.acc[current_time_index, 3] > param.BEGIN_THRESH and self.ts[current_time_index] - self.ts[self.last_step_time_index] > timedelta(seconds=param.MIN_STEP_INTERVAL):
-                self.state = BEGIN_STATE
-                self.last_state_trans_time_index = current_time_index
+                self.status = BEGIN_STATE
+                self.last_status_trans_time_index = current_time_index
                 is_detected = True
 
-        if self.state != STOP_STATE:
-            if (self.ts[current_time_index] - self.ts[self.last_state_trans_time_index] > timedelta(seconds=param.MAX_STATE_INTERVAL)):
-                self.state = STOP_STATE    # reset state if state unchanged for long time
-                self.last_state_trans_time_index = current_time_index
+        if self.status != STOP_STATE:
+            if (self.ts[current_time_index] - self.ts[self.last_status_trans_time_index] > timedelta(seconds=param.MAX_STATE_INTERVAL)):
+                self.status = STOP_STATE    # reset status if status unchanged for long time
+                self.last_status_trans_time_index = current_time_index
         
         return is_detected
 
@@ -82,7 +82,7 @@ class DistEstimator:
     def estim(self, current_time_index: int) -> Tuple[np.float64, np.float64, bool]:
         step_is_detected = self._detect_step(current_time_index)
 
-        if self.state == STOP_STATE:
+        if self.status == STOP_STATE:
             self.last_speed = 0
 
         elif step_is_detected:

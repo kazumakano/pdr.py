@@ -11,7 +11,7 @@ def _set_direct_params(conf: dict) -> None:
     DRIFT = np.float16(conf["gyro_drift"])                       # drift value of gyroscope [degree/second]
 
 def _set_dist_params(conf: dict) -> None:
-    global STEP_LEN_COEF, STATURE, DEFAULT_SPEED, BEGIN_THRESH, POS_PEAK_THRESH, NEG_PEAK_THRESH, END_THRESH, MIN_STEP_INTERVAL, MAX_STATE_INTERVAL
+    global STEP_LEN_COEF, STATURE, DEFAULT_SPEED, BEGIN_THRESH, POS_PEAK_THRESH, NEG_PEAK_THRESH, END_THRESH, MIN_STEP_INTERVAL, MAX_STATUS_INTERVAL
 
     STEP_LEN_COEF = np.float16(conf["step_len_coef"])            # ratio of step length to stature
     STATURE = np.float16(conf["stature"])                        # subject's stature [meter]
@@ -22,7 +22,7 @@ def _set_dist_params(conf: dict) -> None:
     NEG_PEAK_THRESH = np.float16(conf["neg_peak_acc_thresh"])
     END_THRESH = np.float16(conf["step_end_acc_thresh"])
     MIN_STEP_INTERVAL = float(conf["min_step_interval"])         # minimum interval from last step to detect new step [second]
-    MAX_STATE_INTERVAL = float(conf["max_state_interval"])       # maximum interval from last state transition to recognize as moving [second]
+    MAX_STATUS_INTERVAL = float(conf["max_status_interval"])       # maximum interval from last status transition to recognize as moving [second]
 
 def _set_log_params(conf: dict) -> None:
     global WIN_SIZE
