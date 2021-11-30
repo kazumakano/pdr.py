@@ -72,7 +72,7 @@ class DistEstimator:
                 is_detected = True
 
         if self.status != STOP_STATE:
-            if (self.ts[current_time_index] - self.ts[self.last_status_trans_time_index] > timedelta(seconds=param.MAX_STATE_INTERVAL)):
+            if (self.ts[current_time_index] - self.ts[self.last_status_trans_time_index] > timedelta(seconds=param.MAX_STATUS_INTERVAL)):
                 self.status = STOP_STATE    # reset status if status unchanged for long time
                 self.last_status_trans_time_index = current_time_index
         
