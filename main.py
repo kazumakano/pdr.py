@@ -7,7 +7,6 @@ from script.direction_estimator import DirectEstimator
 from script.distance_estimator import DistEstimator
 from script.log import FREQ, Log
 from script.map import Map
-from script.parameter import set_params
 from script.turtle import Turtle
 
 
@@ -78,6 +77,7 @@ def pdr() -> None:
 
 if __name__ == "__main__":
     import argparse
+    from script.parameter import set_params
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", help="specify your config file", metavar="PATH_TO_CONFIG_FILE")

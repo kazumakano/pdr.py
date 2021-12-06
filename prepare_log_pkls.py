@@ -3,7 +3,6 @@ from glob import iglob
 from typing import Union
 import script.parameter as param
 from script.log import Log
-from script.parameter import set_params
 
 
 def prepare_log_pkls(src_file: Union[str, None] = None) -> None:
@@ -16,6 +15,7 @@ def prepare_log_pkls(src_file: Union[str, None] = None) -> None:
 
 if __name__ == "__main__":
     import argparse
+    from script.parameter import set_params
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", help="specify your config file", metavar="PATH_TO_CONFIG_FILE")
