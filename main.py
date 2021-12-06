@@ -1,5 +1,3 @@
-import argparse
-import os.path as path
 from datetime import datetime
 import numpy as np
 import particle_filter.script.parameter as pf_param
@@ -79,6 +77,8 @@ def pdr() -> None:
     map.show(0)    
 
 if __name__ == "__main__":
+    import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", help="specify your config file", metavar="PATH_TO_CONFIG_FILE")
 

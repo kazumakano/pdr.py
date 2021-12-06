@@ -1,4 +1,3 @@
-import argparse
 import os.path as path
 from glob import iglob
 from typing import Union
@@ -16,6 +15,8 @@ def prepare_log_pkls(src_file: Union[str, None] = None) -> None:
         Log(file_name=src_file).export_to_pkl(src_file)
 
 if __name__ == "__main__":
+    import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", help="specify your config file", metavar="PATH_TO_CONFIG_FILE")
     parser.add_argument("--src_file", help="specify sourse file", metavar="PATH_TO_SRC_FILE")
