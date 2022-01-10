@@ -1,2 +1,5 @@
-config/
-log/
+config/*
+!config/README.md
+log/*
+!log/README.md
+script/__pycache__/
