@@ -17,10 +17,10 @@ class DirectEstimator:
         self.gyro = np.hstack((gyro, np.linalg.norm(gyro, axis=1)[:, np.newaxis]))
 
         self.last_direct = 0
-        if param.ROTATE_AX % 2 == 1:
-            self.sign = 1     # positive
-        else:
-            self.sign = -1    # negative
+        if param.ROTATE_AX % 2 == 1:    # positive
+            self.sign = -1
+        else:                           # negative
+            self.sign = 1
 
     # estimate direction by integral
     def estim(self, current_time_index: int) -> tuple[np.float64, np.float64]:
