@@ -16,7 +16,7 @@ class Log:
             raise Exception("log.py: log range is wrong")
 
         self.ts = np.empty(0, dtype=datetime)            # timestamp
-        self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of acceleration and gyroscope
+        self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of acceleration meter and gyroscope
 
         if file[-4:] == ".csv":
             self._load_csv(begin, end, file)
