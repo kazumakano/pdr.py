@@ -37,7 +37,7 @@ def pdr() -> None:
     if pf_param.ENABLE_SAVE_VIDEO:
         map.init_recorder()
 
-    if param.WIN_SIZE == 0:     # window disabled
+    if pf_param.WIN_STRIDE == 0:     # window disabled
         for i, t in enumerate(log.ts):
             print(f"main.py: {t.time()}")
 
@@ -52,16 +52,16 @@ def pdr() -> None:
             if pf_param.ENABLE_SAVE_VIDEO:
                 map.record()
     
-    elif param.WIN_SIZE > 0:    # window is enabled
-        win_len = int(param.WIN_SIZE * FREQ)
+    elif pf_param.WIN_STRIDE > 0:    # window is enabled
+        win_len = int(pf_param.WIN_STRIDE * FREQ)
         for i in range(win_len - 1, len(log.ts), win_len):
             print(f"main.py: {log.ts[i].time()}")
 
             speed = pf_util.conv_from_meter_to_pixel(distor.get_win_speed(i), map.resolution)
-            turtle.forward(speed * param.WIN_SIZE)
+            turtle.forward(speed * pf_param.WIN_STRIDE)
 
             angular_vel = director.get_win_angular_vel(i)
-            turtle.right((angular_vel - director.sign * param.DRIFT) * param.WIN_SIZE)
+            turtle.right((angular_vel - director.sign * param.DRIFT) * pf_param.WIN_STRIDE)
 
             map.draw_pos(turtle.pos)
             map.show()

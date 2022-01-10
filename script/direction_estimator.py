@@ -2,6 +2,7 @@ import math
 from datetime import datetime
 from typing import Union
 import numpy as np
+import particle_filter.script.parameter as pf_param
 from matplotlib import pyplot as plt
 from . import parameter as param
 
@@ -29,7 +30,7 @@ class DirectEstimator:
         return self.last_direct, angular_vel
     
     def get_win_angular_vel(self, current_time_index: int) -> np.float64:
-        win_len = np.uint16(param.WIN_SIZE * param.FREQ)
+        win_len = np.int16(pf_param.WIN_STRIDE * param.FREQ)
         angular_vel = np.empty(win_len, dtype=np.float64)
         
         for i in reversed(range(win_len)):

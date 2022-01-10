@@ -4,6 +4,7 @@ import pickle
 from datetime import datetime, timedelta
 from typing import Any, Union
 import numpy as np
+import particle_filter.script.parameter as pf_param
 from matplotlib import pyplot as plt
 from . import parameter as param
 
@@ -32,7 +33,7 @@ class Log:
             reader = csv.reader(f)
             for row in reader:
                 log_datetime = datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f")
-                if log_datetime < begin - timedelta(seconds=param.WIN_SIZE - 1 / param.FREQ):
+                if log_datetime < begin - timedelta(seconds=pf_param.WIN_STRIDE - 1 / param.FREQ):
                     continue
                 elif log_datetime > end:
                     break
@@ -42,7 +43,7 @@ class Log:
     def _slice(self, begin: datetime, end: datetime) -> None:
         slice_time_index = len(self.ts)
         for i, t in enumerate(self.ts):
-            if t >= begin - timedelta(seconds=(param.WIN_SIZE - 1 / param.FREQ)):
+            if t >= begin - timedelta(seconds=(pf_param.WIN_STRIDE - 1 / param.FREQ)):
                 slice_time_index = i
                 break
         self.ts = self.ts[slice_time_index:]

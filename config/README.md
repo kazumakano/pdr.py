@@ -3,15 +3,13 @@
 This is directory for config files.
 Put your config files here.
 You can customize following parameters:
-| Key                   | Description                                                           | Notes                                     | Type          |
+| Key                   | Description                                                            | Notes                                    | Type          |
 | ---                   | ---                                                                    | ---                                      | ---           |
 | begin                 | begin datetime of RSSI log                                             | must be like 'yyyy-mm-dd hh:mm:ss'       | `str`         |
 | end                   | end datetime of RSSI log                                               | must be like 'yyyy-mm-dd hh:mm:ss'       | `str`         |
 | log_file              | acceleration and angular velocity log file                             |                                          | `str`         |
 | init_direct           | initial direction [degree]                                             |                                          | `float`       |
 | init_pos              | initial position [pixel]                                               |                                          | `list[float]` |
-|                       |                                                                        |                                          |               |
-| win_size              | size of window [second]                                                | disabled if 0                            | `float`       |
 |                       |                                                                        |                                          |               |
 | enable_clear_map      | clear map image at each step or not                                    |                                          | `bool`        |
 | enable_save_img       | capture image or not                                                   |                                          | `bool`        |
@@ -20,7 +18,7 @@ You can customize following parameters:
 | map_conf_file         | map config file                                                        |                                          | `str`         |
 | map_img_file          | map image file                                                         |                                          | `str`         |
 | result_file_name      | file name of image and video                                           | auto generated if unspecified            | `str \| None` |
-| win_stride            | stride width of sliding window [second]                                |                                          | `float`       |
+| win_stride            | stride width of sliding window [second]                                | overlap is 0%, disabled if 0             | `float`       |
 |                       |                                                                        |                                          |               |
 | enable_truth          | enable ground truth or not                                             |                                          | `bool`        |
 |                       |                                                                        |                                          |               |
