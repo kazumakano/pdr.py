@@ -13,7 +13,7 @@ END_STATE = 4
 DETECT_STATE = 5
 
 class DistEstimator:
-    def __init__(self, ts: np.ndarray, acc: np.ndarray) -> None:
+    def __init__(self, acc: np.ndarray, ts: np.ndarray) -> None:
         global STEP_LEN
 
         STEP_LEN = param.STEP_LEN_COEF * param.STATURE    # length of 1 step [meter]

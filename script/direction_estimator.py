@@ -8,7 +8,7 @@ from . import parameter as param
 
 
 class DirectEstimator:
-    def __init__(self, ts: np.ndarray, gyro: np.ndarray) -> None:
+    def __init__(self, gyro: np.ndarray, ts: np.ndarray) -> None:
         global AX_INDEX
 
         AX_INDEX = np.int8((param.ROTATE_AX - 1) // 2)    # 0: x, 1: y, 2: z
