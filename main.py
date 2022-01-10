@@ -30,7 +30,7 @@ def pdr() -> None:
     if pf_param.ENABLE_SAVE_VIDEO:
         map.init_recorder()
 
-    if pf_param.WIN_STRIDE == 0:    # sliding window is disabled
+    if param.WIN_STRIDE == 0:    # sliding window is disabled
         t: datetime
         for i, t in enumerate(log.ts):
             print(f"main.py: {t.time()}")
@@ -47,15 +47,15 @@ def pdr() -> None:
                 map.record()
     
     else:                           # sliding window is enabled
-        win_len = np.int16(pf_param.WIN_STRIDE * param.FREQ)
+        win_len = np.int16(param.WIN_STRIDE * param.FREQ)
         for i in range(win_len - 1, len(log.ts), win_len):
             print(f"main.py: {log.ts[i].time()}")
 
             speed = pf_util.conv_from_meter_to_pixel(distor.get_win_speed(i, win_len), map.resolution)
-            turtle.forward(speed * pf_param.WIN_STRIDE)
+            turtle.forward(speed * param.WIN_STRIDE)
 
             angular_vel = director.get_win_angular_vel(i, win_len)
-            turtle.right((angular_vel - director.sign * param.DRIFT) * pf_param.WIN_STRIDE)
+            turtle.right((angular_vel - director.sign * param.DRIFT) * param.WIN_STRIDE)
 
             map.draw_pos(turtle.pos)
             map.show()

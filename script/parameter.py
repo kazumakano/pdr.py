@@ -24,9 +24,10 @@ def _set_dist_params(conf: dict[str, Any]) -> None:
     END_THRESH = np.float16(conf["step_end_acc_thresh"])
 
 def _set_log_params(conf: dict[str, Any]) -> None:
-    global FREQ
+    global FREQ, WIN_STRIDE
 
     FREQ = np.float16(conf["freq"])
+    WIN_STRIDE = float(conf["pdr_win_stride"])
 
 def set_params(conf_file: Union[str, None] = None) -> dict[str, Any]:
     global ROOT_DIR

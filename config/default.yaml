@@ -11,7 +11,6 @@ frame_rate: 1
 map_conf_file: sample.yaml
 map_img_file: sample.pgm
 result_file_name:
-win_stride: 0.1
 
 enable_truth: False
 
@@ -29,11 +28,13 @@ neg_peak_acc_thresh: 0.93
 step_end_acc_thresh: 0.97
 
 freq: 100
+pdr_win_stride: 0.1
 
 # tentation
 win_size: 2
 enable_draw_beacons: False
 map_show_policy: 1
+win_stride: 1
 direct_sd: 4.5
 max_particle_stride: 32
 lost_resample_policy: 1
