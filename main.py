@@ -47,14 +47,14 @@ def pdr() -> None:
                 map.record()
     
     else:                           # sliding window is enabled
-        win_len = int(pf_param.WIN_STRIDE * param.FREQ)
+        win_len = np.int16(pf_param.WIN_STRIDE * param.FREQ)
         for i in range(win_len - 1, len(log.ts), win_len):
             print(f"main.py: {log.ts[i].time()}")
 
-            speed = pf_util.conv_from_meter_to_pixel(distor.get_win_speed(i), map.resolution)
+            speed = pf_util.conv_from_meter_to_pixel(distor.get_win_speed(i, win_len), map.resolution)
             turtle.forward(speed * pf_param.WIN_STRIDE)
 
-            angular_vel = director.get_win_angular_vel(i)
+            angular_vel = director.get_win_angular_vel(i, win_len)
             turtle.right((angular_vel - director.sign * param.DRIFT) * pf_param.WIN_STRIDE)
 
             map.draw_pos(turtle.pos)
