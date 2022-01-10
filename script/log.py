@@ -63,8 +63,11 @@ class Log:
         self._slice(begin, end)
 
     def export_to_pkl(self, file: str) -> None:
-        with open(file[:-4] + ".pkl", "wb") as f:
+        tgt_file = file[:-4] + ".pkl"
+        with open(tgt_file, "wb") as f:
             pickle.dump((self.ts, self.val), f)
+        
+        print(f"log.py: log have been exported to {path.basename(tgt_file)}")
 
     def vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None, enable_lim: bool = False, components_lim: Any = (-1, 1), norm_lim: Any = (0, 2)) -> None:
         if begin is None:
