@@ -34,3 +34,5 @@ You can customize following parameters:
 | pos_peak_acc_thresh   | threshold of acceleration for positive peak [G]                        |                                          | `float`       |
 | neg_peak_acc_thresh   | threshold of acceleration for negative peak [G]                        |                                          | `float`       |
 | step_end_acc_thresh   | threshold of acceleration for step end [G]                             |                                          | `float`       |
+|                       |                                                                        |                                          |               |
+| freq                  | frequency of inertial logs [Hz]                                        |                                          | `float`       |

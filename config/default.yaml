@@ -28,6 +28,8 @@ pos_peak_acc_thresh: 1.11
 neg_peak_acc_thresh: 0.93
 step_end_acc_thresh: 0.97
 
+freq: 100
+
 # tentation
 win_size: 2
 enable_draw_beacons: False
