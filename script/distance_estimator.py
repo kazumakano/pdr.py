@@ -21,11 +21,11 @@ class DistEstimator:
         self.ts = ts
         self.acc = np.hstack((acc, np.linalg.norm(acc, axis=1)[:, np.newaxis]))
 
-        self.status = STOP_STATE                # status at automaton
-        self.last_status_trans_time_index = 0    # index of last time when status transitioned
-        self.last_step_time_index = 0           # index of last time when step was detected
-        self.last_speed = 0                     # speed at last time [meter/second]
-        self.last_dist = 0                      # cumulative movement distance until last time [meter]
+        self.last_dist = 0
+        self.last_speed = 0
+        self.last_status_trans_time_index = 0    # index of time when status transitioned last
+        self.last_step_time_index = 0            # index of time when step was detected last
+        self.status = STOP_STATE                 # status of automaton
 
     # update status and detect step with automaton
     def _detect_step(self, current_time_index: int) -> bool:

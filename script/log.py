@@ -72,8 +72,8 @@ class Log:
         if end is None:
             end = self.ts[-1]
 
-        titles = ("X", "Y", "Z")
         axes: np.ndarray = plt.subplots(nrows=4 * len(SENSORS), figsize=(16, 16 * len(SENSORS)))[1]
+        titles = ("X", "Y", "Z")
         for i, s in enumerate(SENSORS):
             for j in range(3):
                 axes[4*i+j].set_title(s + "_" + titles[j])
