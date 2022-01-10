@@ -1,50 +1,42 @@
-# direction
-rotate_ax: 3
-gyro_drift: 0
+begin: "2000-01-01 00:00:00"
+end: "2000-01-01 23:59:59"
+log_file: "sample_ble.csv"
+init_direct: 0
+init_pos: [0, 0]
 
-# distance
-step_len_coef: 0.42
-stature: 1.7
+enable_clear_map: True
+enable_save_img: False
+enable_save_video: False
+frame_rate: 1
+map_conf_file: sample.yaml
+map_img_file: sample.pgm
+result_file_name:
+win_stride: 0.1
+
+enable_truth: False
+
+gyro_drift: 0
+rotate_ax: 3
+
 default_speed: 1
+max_status_interval: 0.5
+min_step_interval: 0.5
+stature: 1.7
+step_len_coef: 0.42
 step_begin_acc_thresh: 1.05
 pos_peak_acc_thresh: 1.11
 neg_peak_acc_thresh: 0.93
 step_end_acc_thresh: 0.97
-min_step_interval: 0.5
-max_status_interval: 0.5
-max_step_interval: 2
 
-# log
-file_range_policy: 1
-log_file: 2000-01-01_sample.pkl
-pdr_win_size: 0.1
-
-# particle_filter
-begin: "2000-01-01 00:00:00"
-end: "2000-01-01 23:59:59"
-enable_truth: False
-
-map_img_file: sample.pgm
-map_conf_file: sample.yaml
-enable_clear_map: True
+# tentation
+win_size: 2
 enable_draw_beacons: False
 map_show_policy: 1
-
-init_pos: [0, 0]
-init_direct: 0
-max_particle_stride: 32
 direct_sd: 4.5
-lost_resample_policy: 2
-
-win_size: 2
-win_stride: 1
-win_policy: 1
-
-enable_save_video: False
-enable_save_img: False
-file_name:
-frame_rate: 1
-
-propag_coef: 4
-el_correction: 2
+max_particle_stride: 32
+lost_resample_policy: 1
 dist_sd: 64
+el_correction: 2
+neg_weight_coef: 0
+propag_coef: 4
+win_policy: 1
