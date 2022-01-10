@@ -11,6 +11,19 @@ You can customize following parameters:
 | init_direct           | initial direction [degree]                                             |                                          | `float`       |
 | init_pos              | initial position [pixel]                                               |                                          | `list[float]` |
 |                       |                                                                        |                                          |               |
+| win_size              | size of window [second]                                                | disabled if 0                            | `float`       |
+|                       |                                                                        |                                          |               |
+| enable_clear_map      | clear map image at each step or not                                    |                                          | `bool`        |
+| enable_save_img       | capture image or not                                                   |                                          | `bool`        |
+| enable_save_video     | record video or not                                                    |                                          | `bool`        |
+| frame_rate            | frame rate of video [FPS]                                              | synchronized with real speed if 0        | `float`       |
+| map_conf_file         | map config file                                                        |                                          | `str`         |
+| map_img_file          | map image file                                                         |                                          | `str`         |
+| result_file_name      | file name of image and video                                           | auto generated if unspecified            | `str \| None` |
+| win_stride            | stride width of sliding window [second]                                |                                          | `float`       |
+|                       |                                                                        |                                          |               |
+| enable_truth          | enable ground truth or not                                             |                                          | `bool`        |
+|                       |                                                                        |                                          |               |
 | gyro_drift            | drift value of gyroscope [degree/second]                               |                                          | `float`       |
 | rotate_ax             | rotation axis in smartphones coordinate frame                          | 1: +x, 2: -x, 3: +y, 4: -y, 5: +z, 6: -z | `int`         |
 |                       |                                                                        |                                          |               |
@@ -23,5 +36,3 @@ You can customize following parameters:
 | pos_peak_acc_thresh   | threshold of acceleration for positive peak [G]                        |                                          | `float`       |
 | neg_peak_acc_thresh   | threshold of acceleration for negative peak [G]                        |                                          | `float`       |
 | step_end_acc_thresh   | threshold of acceleration for step end [G]                             |                                          | `float`       |
-|                       |                                                                        |                                          |               |
-| win_size              | size of window [second]                                                | disabled if 0                            | `float`       |
