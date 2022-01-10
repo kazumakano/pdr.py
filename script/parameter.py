@@ -1,16 +1,16 @@
 import os.path as path
-from typing import Union
+from typing import Any, Union
 import numpy as np
 from particle_filter.script.parameter import set_params as set_pf_params
 
 
-def _set_direct_params(conf: dict) -> None:
+def _set_direct_params(conf: dict[str, Any]) -> None:
     global DRIFT, ROTATE_AX
 
     DRIFT = np.float16(conf["gyro_drift"])
     ROTATE_AX = np.int8(conf["rotate_ax"])
 
-def _set_dist_params(conf: dict) -> None:
+def _set_dist_params(conf: dict[str, Any]) -> None:
     global DEFAULT_SPEED, MAX_STATUS_INTERVAL, MIN_STEP_INTERVAL, STATURE, STEP_LEN_COEF, BEGIN_THRESH, POS_PEAK_THRESH, NEG_PEAK_THRESH, END_THRESH
 
     DEFAULT_SPEED = np.float16(conf["default_speed"])
@@ -23,12 +23,13 @@ def _set_dist_params(conf: dict) -> None:
     NEG_PEAK_THRESH = np.float16(conf["neg_peak_acc_thresh"])
     END_THRESH = np.float16(conf["step_end_acc_thresh"])
 
-def _set_log_params(conf: dict) -> None:
-    global WIN_SIZE
+def _set_log_params(conf: dict[str, Any]) -> None:
+    global FREQ, WIN_SIZE
 
+    FREQ = np.float16(conf["freq"])
     WIN_SIZE = float(conf["win_size"])
 
-def set_params(conf_file: Union[str, None] = None) -> dict:
+def set_params(conf_file: Union[str, None] = None) -> dict[str, Any]:
     global ROOT_DIR
 
     ROOT_DIR = path.join(path.dirname(__file__), "../")

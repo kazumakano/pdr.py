@@ -1,9 +1,8 @@
 from datetime import datetime, timedelta
-from typing import Tuple, Union
+from typing import Union
 import numpy as np
 from matplotlib import pyplot as plt
 from . import parameter as param
-from .log import FREQ
 
 STOP_STATE = 0
 BEGIN_STATE = 1
@@ -79,7 +78,7 @@ class DistEstimator:
         return is_detected
 
     # estimate movement distance by step detection
-    def estim(self, current_time_index: int) -> Tuple[np.float64, np.float64, bool]:
+    def estim(self, current_time_index: int) -> tuple[np.float64, np.float64, bool]:
         step_is_detected = self._detect_step(current_time_index)
 
         if self.status == STOP_STATE:
@@ -93,12 +92,12 @@ class DistEstimator:
                 self.last_speed = STEP_LEN / (interval.seconds + interval.microseconds / 1000000)
             self.last_step_time_index = current_time_index    # update last_step_time_index
 
-        self.last_dist += self.last_speed / FREQ
+        self.last_dist += self.last_speed / param.FREQ
 
         return self.last_dist, self.last_speed, step_is_detected
 
     def get_win_speed(self, current_time_index: int) -> np.float64:
-        win_len = np.uint16(param.WIN_SIZE * FREQ)
+        win_len = np.uint16(param.WIN_SIZE * param.FREQ)
         speed = np.empty(win_len, dtype=np.float64)
 
         for i in reversed(range(win_len)):

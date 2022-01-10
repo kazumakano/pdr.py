@@ -1,36 +1,35 @@
 import math
 from datetime import datetime
-from typing import Tuple, Union
+from typing import Union
 import numpy as np
 from matplotlib import pyplot as plt
 from . import parameter as param
-from .log import FREQ
 
 
 class DirectEstimator:
     def __init__(self, ts: np.ndarray, gyro: np.ndarray) -> None:
         global AX_INDEX
 
-        AX_INDEX = np.uint8((param.ROTATE_AX - 1) // 2)    # 0: x, 1: y, 2: z
+        AX_INDEX = np.int8((param.ROTATE_AX - 1) // 2)    # 0: x, 1: y, 2: z
 
         self.ts = ts
         self.gyro = np.hstack((gyro, np.linalg.norm(gyro, axis=1)[:, np.newaxis]))
 
+        self.last_direct = 0
         if param.ROTATE_AX % 2 == 1:
             self.sign = 1     # positive
         else:
             self.sign = -1    # negative
-        self.last_direct = 0
 
     # estimate direction by integral
-    def estim(self, current_time_index: int) -> Tuple[np.float64, np.float64]:
+    def estim(self, current_time_index: int) -> tuple[np.float64, np.float64]:
         angular_vel = self.sign * math.degrees(self.gyro[current_time_index, AX_INDEX])
-        self.last_direct += (angular_vel - self.sign * param.DRIFT) / FREQ    # integrate
+        self.last_direct += (angular_vel - self.sign * param.DRIFT) / param.FREQ    # integrate
 
         return self.last_direct, angular_vel
     
     def get_win_angular_vel(self, current_time_index: int) -> np.float64:
-        win_len = np.uint16(param.WIN_SIZE * FREQ)
+        win_len = np.uint16(param.WIN_SIZE * param.FREQ)
         angular_vel = np.empty(win_len, dtype=np.float64)
         
         for i in reversed(range(win_len)):
