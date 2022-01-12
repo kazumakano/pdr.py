@@ -7,7 +7,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 from . import parameter as param
 
-SENSORS = ("ACC", "GYRO")
 
 class Log:
     def __init__(self, begin: datetime, end: datetime, file: str) -> None:
@@ -74,16 +73,16 @@ class Log:
         if end is None:
             end = self.ts[-1]
 
-        axes: np.ndarray = plt.subplots(nrows=4 * len(SENSORS), figsize=(16, 16 * len(SENSORS)))[1]
+        axes: np.ndarray = plt.subplots(nrows=8, figsize=(16, 32))[1]
         titles = ("X", "Y", "Z")
-        for i, s in enumerate(SENSORS):
+        for i, s in enumerate(("Acc", "Gyro")):
             for j in range(3):
-                axes[4*i+j].set_title(s + "_" + titles[j])
+                axes[4*i+j].set_title(f"{s} {titles[j]}")
                 axes[4*i+j].set_xlim((begin, end))
                 if enable_lim:
                     axes[4*i+j].set_ylim(components_lim)
                 axes[4*i+j].plot(self.ts, self.val[:, 3*i+j])
-            axes[4*i+3].set_title(s + "_" + "NORM")
+            axes[4*i+3].set_title(f"{s} Norm")
             axes[4*i+3].set_xlim((begin, end))
             if enable_lim:
                 axes[4*i+3].set_ylim(norm_lim)
