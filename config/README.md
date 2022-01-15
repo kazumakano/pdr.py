@@ -1,5 +1,4 @@
 # config
-
 This is directory for config files.
 Put your config files here.
 You can customize following parameters:
