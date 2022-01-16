@@ -41,7 +41,7 @@ class Log:
     def _slice(self, begin: datetime, end: datetime) -> None:
         slice_time_index = len(self.ts)
         for i, t in enumerate(self.ts):
-            if t >= begin - timedelta(seconds=(param.WIN_STRIDE - 1 / param.FREQ)):
+            if t >= begin - timedelta(seconds=param.WIN_STRIDE - 1 / param.FREQ):
                 slice_time_index = i
                 break
         self.ts = self.ts[slice_time_index:]
