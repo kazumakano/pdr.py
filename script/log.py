@@ -56,7 +56,7 @@ class Log:
         self.val = self.val[:slice_time_index]
     
     def _load_pkl(self, begin: datetime, end: datetime, file: str) -> None:
-        with open(file, "rb") as f:
+        with open(file, mode="rb") as f:
             self.ts, self.val = pickle.load(f)
         self._slice(begin, end)
 
