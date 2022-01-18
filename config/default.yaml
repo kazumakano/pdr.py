@@ -12,7 +12,7 @@ map_conf_file: sample.yaml
 map_img_file: sample.pgm
 result_file_name:
 
-enable_truth: False
+truth_log_file:
 
 gyro_drift: 0
 rotate_ax: 3
@@ -40,6 +40,7 @@ max_particle_stride: 32
 lost_resample_policy: 1
 dist_sd: 64
 el_correction: 2
+estim_pos_policy: 1
 neg_weight_coef: 0
 propag_coef: 4
 win_policy: 1

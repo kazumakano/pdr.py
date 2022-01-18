@@ -18,7 +18,7 @@ You can customize following parameters:
 | map_img_file          | map image file                                                         |                                          | `str`         |
 | result_file_name      | file name of image and video                                           | auto generated if unspecified            | `str \| None` |
 |                       |                                                                        |                                          |               |
-| enable_truth          | enable ground truth or not                                             |                                          | `bool`        |
+| truth_log_file        | ground truth position log file                                         | disabled if unspecified                  | `str \| None` |
 |                       |                                                                        |                                          |               |
 | gyro_drift            | drift value of gyroscope [degree/second]                               |                                          | `float`       |
 | rotate_ax             | rotation axis in smartphones coordinate frame                          | 1: +x, 2: -x, 3: +y, 4: -y, 5: +z, 6: -z | `int`         |
