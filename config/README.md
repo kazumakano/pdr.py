@@ -9,6 +9,7 @@ You can customize following parameters:
 | log_file              | acceleration and angular velocity log file                             |                                          | `str`         |
 | init_direct           | initial direction [degree]                                             |                                          | `float`       |
 | init_pos              | initial position [pixel]                                               |                                          | `list[float]` |
+| result_file_name      | file name of image and video                                           | auto generated if unspecified            | `str \| None` |
 |                       |                                                                        |                                          |               |
 | enable_clear_map      | clear map image at each step or not                                    |                                          | `bool`        |
 | enable_save_img       | capture image or not                                                   |                                          | `bool`        |
@@ -16,7 +17,6 @@ You can customize following parameters:
 | frame_rate            | frame rate of video [FPS]                                              | synchronized with real speed if 0        | `float`       |
 | map_conf_file         | map config file                                                        |                                          | `str`         |
 | map_img_file          | map image file                                                         |                                          | `str`         |
-| result_file_name      | file name of image and video                                           | auto generated if unspecified            | `str \| None` |
 |                       |                                                                        |                                          |               |
 | truth_log_file        | ground truth position log file                                         | disabled if unspecified                  | `str \| None` |
 |                       |                                                                        |                                          |               |

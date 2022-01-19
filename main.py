@@ -12,17 +12,18 @@ from script.turtle import Turtle
 
 
 def _set_main_params(conf: dict) -> None:
-    global BEGIN, END, LOG_FILE, INIT_DIRECT, INIT_POS
+    global BEGIN, END, LOG_FILE, INIT_DIRECT, INIT_POS, RESULT_FILE_NAME
 
     BEGIN = datetime.strptime(conf["begin"], "%Y-%m-%d %H:%M:%S")
     END = datetime.strptime(conf["end"], "%Y-%m-%d %H:%M:%S")
     LOG_FILE = str(conf["log_file"])
     INIT_DIRECT = np.float16(conf["init_direct"])
     INIT_POS = np.array(conf["init_pos"], dtype=np.float16)
+    RESULT_FILE_NAME = pf_util.gen_file_name() if conf["result_file_name"] is None else str(conf["result_file_name"])
 
 def pdr() -> None:
     log = Log(BEGIN, END, path.join(param.ROOT_DIR, "log/", LOG_FILE))
-    map = Map()
+    map = Map(RESULT_FILE_NAME)
     turtle = Turtle(INIT_POS, INIT_DIRECT)
     distor = DistEstimator(log.val[:, 0:3], log.ts)
     director = DirectEstimator(log.val[:, 3:6], log.ts)
