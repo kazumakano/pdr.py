@@ -24,8 +24,8 @@ def _set_main_params(conf: dict) -> None:
 
 def pdr(conf: dict[str, Any]) -> None:
     log = Log(BEGIN, END, path.join(param.ROOT_DIR, "log/", LOG_FILE))
-    distor = DistEstimator(log.val[:, 0:3], log.ts)
     director = DirectEstimator(log.val[:, 3:6], log.ts)
+    distor = DistEstimator(log.val[:, 0:3], log.ts)
     map = Map(pf_util.make_result_dir(RESULT_DIR_NAME))
     turtle = Turtle(INIT_POS, INIT_DIRECT)
 
