@@ -1,5 +1,6 @@
 import os.path as path
 from datetime import datetime
+from typing import Any
 import numpy as np
 import particle_filter.script.parameter as pf_param
 import particle_filter.script.utility as pf_util
@@ -12,21 +13,21 @@ from script.turtle import Turtle
 
 
 def _set_main_params(conf: dict) -> None:
-    global BEGIN, END, LOG_FILE, INIT_DIRECT, INIT_POS, RESULT_FILE_NAME
+    global BEGIN, END, LOG_FILE, INIT_DIRECT, INIT_POS, RESULT_DIR_NAME
 
     BEGIN = datetime.strptime(conf["begin"], "%Y-%m-%d %H:%M:%S")
     END = datetime.strptime(conf["end"], "%Y-%m-%d %H:%M:%S")
     LOG_FILE = str(conf["log_file"])
     INIT_DIRECT = np.float16(conf["init_direct"])
     INIT_POS = np.array(conf["init_pos"], dtype=np.float16)
-    RESULT_FILE_NAME = pf_util.gen_file_name() if conf["result_file_name"] is None else str(conf["result_file_name"])
+    RESULT_DIR_NAME = None if conf["result_dir_name"] is None else str(conf["result_dir_name"])
 
-def pdr() -> None:
+def pdr(conf: dict[str, Any]) -> None:
     log = Log(BEGIN, END, path.join(param.ROOT_DIR, "log/", LOG_FILE))
-    map = Map(RESULT_FILE_NAME)
-    turtle = Turtle(INIT_POS, INIT_DIRECT)
     distor = DistEstimator(log.val[:, 0:3], log.ts)
     director = DirectEstimator(log.val[:, 3:6], log.ts)
+    map = Map(pf_util.make_result_dir(RESULT_DIR_NAME))
+    turtle = Turtle(INIT_POS, INIT_DIRECT)
 
     if pf_param.ENABLE_SAVE_VIDEO:
         map.init_recorder()
@@ -77,6 +78,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--conf_file", help="specify config file", metavar="PATH_TO_CONF_FILE")
 
-    _set_main_params(set_params(parser.parse_args().conf_file))
+    conf = set_params(parser.parse_args().conf_file)
+    _set_main_params(conf)
 
-    pdr()
+    pdr(conf)
