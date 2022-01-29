@@ -1,6 +1,6 @@
 begin: "2000-01-01 00:00:00"
 end: "2000-01-01 23:59:59"
-log_file: "sample_ble.csv"
+log_file: "sample_inertial.csv"
 init_direct: 0
 init_pos: [0, 0]
 result_file_name:
@@ -11,8 +11,11 @@ enable_save_video: False
 frame_rate: 1
 map_conf_file: sample.yaml
 map_img_file: sample.pgm
+map_show_range:
 
 truth_log_file:
+
+enable_write_conf: False
 
 gyro_drift: 0
 rotate_ax: 3
@@ -31,17 +34,17 @@ freq: 100
 pdr_win_stride: 0.1
 
 # tentation
-win_size: 2
+win_size: 2.5
 enable_draw_beacons: False
-map_show_policy: 1
+map_show_policy: 2
 win_stride: 1
-direct_sd: 4.5
-max_particle_stride: 32
-rand_pos_range: 512
+direct_sd: 1
+max_particle_stride: 25
+rand_pos_range: 375
 lost_resample_policy: 1
-dist_sd: 64
+dist_sd: 50
 el_correction: 2
 estim_pos_policy: 1
 neg_weight_coef: 0
-propag_coef: 4
+propag_coef: 5.5
 win_policy: 1
