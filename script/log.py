@@ -47,14 +47,14 @@ class Log:
         self.ts = self.ts[slice_time_index:]
         self.val = self.val[slice_time_index:]
 
-        slice_time_index = -1
+        slice_time_index = len(self.ts)
         for i, t in enumerate(self.ts):
             if t > end:
                 slice_time_index = i
                 break
         self.ts = self.ts[:slice_time_index]
         self.val = self.val[:slice_time_index]
-    
+
     def _load_pkl(self, begin: datetime, end: datetime, file: str) -> None:
         with open(file, mode="rb") as f:
             self.ts, self.val = pickle.load(f)

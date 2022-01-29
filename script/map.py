@@ -16,7 +16,8 @@ class Map(PfMap):
         self.img = self.plain_img.copy()
         with open(path.join(pf_param.ROOT_DIR, "map/", pf_param.CONF_FILE)) as f:
             self.resolution = np.float16(yaml.safe_load(f)["resolution"])
-        self.result_dir = result_dir
+        if result_dir is not None:
+            self.result_dir = result_dir
 
     def draw_pos(self, pos: np.ndarray) -> None:
         if pf_param.ENABLE_CLEAR:
