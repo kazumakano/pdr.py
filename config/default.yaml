@@ -1,9 +1,9 @@
 begin: "2000-01-01 00:00:00"
 end: "2000-01-01 23:59:59"
-log_file: "sample_inertial.csv"
+log_file: sample_inertial.pkl
 init_direct: 0
 init_pos: [0, 0]
-result_file_name:
+result_dir_name:
 
 enable_clear_map: True
 enable_save_img: False
@@ -31,20 +31,20 @@ neg_peak_acc_thresh: 0.93
 step_end_acc_thresh: 0.97
 
 freq: 100
-pdr_win_stride: 0.1
 
 # tentation
-win_size: 2.5
+win_size: 2
+beacon_dir: beacon
 enable_draw_beacons: False
-map_show_policy: 2
+map_show_policy: 3
 win_stride: 1
 direct_sd: 1
 max_particle_stride: 25
 rand_pos_range: 375
 lost_resample_policy: 1
-dist_sd: 50
+dist_sd: 37.5
 el_correction: 2
-estim_pos_policy: 1
+estim_pos_policy: 2
 neg_weight_coef: 0
-propag_coef: 5.5
+propag_coef: 5
 win_policy: 1

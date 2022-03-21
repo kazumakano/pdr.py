@@ -37,4 +37,3 @@ You can customize following parameters:
 | step_end_acc_thresh   | threshold of acceleration for step end [G]                        |                                          | `float`       |
 |                       |                                                                   |                                          |               |
 | freq                  | frequency of inertial sensor logs [Hz]                            |                                          | `float`       |
-| pdr_win_stride        | stride width of sliding window [s]                                | overlap is 0%, disabled if 0             | `float`       |
