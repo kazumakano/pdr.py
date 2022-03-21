@@ -1,5 +1,5 @@
-# step_pdr.py
-This is Python module to estimate subject's position with step detection based pedestrian dead reckoning.
+# simple_pdr.py
+This is Python module to estimate subject's position with pedestrian dead reckoning based on step detection and integral.
 
 ## Usage
 ### main.py
