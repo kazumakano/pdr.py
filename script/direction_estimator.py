@@ -1,59 +1,39 @@
-import math
 from datetime import datetime
-from typing import Union
+from typing import Optional
 import numpy as np
-import particle_filter.script.parameter as pf_param
 from matplotlib import pyplot as plt
 from . import parameter as param
 
 
 class DirectEstimator:
-    def __init__(self, gyro: np.ndarray, ts: np.ndarray) -> None:
-        global AX_INDEX
-
-        AX_INDEX = np.int8((param.ROTATE_AX - 1) // 2)    # 0: x, 1: y, 2: z
-
+    def __init__(self, gyro: np.ndarray, ts: np.ndarray, init_direct: np.float32 = 0) -> None:
         self.ts = ts
-        self.gyro = np.hstack((gyro, np.linalg.norm(gyro, axis=1)[:, np.newaxis]))
+        self.angular_vel = (-1 if param.ROTATE_AX % 2 == 1 else 1) * (np.degrees(gyro[:, (param.ROTATE_AX - 1) // 2]) - param.DRIFT)    # clockwise angular velocity around rotation axis [°/s]
+        self._estim(init_direct)
 
-        self.last_direct = 0
-        self.sign = -1 if param.ROTATE_AX % 2 == 1 else 1
+    # estimate direction by simple integral
+    def _estim(self, init_direct: np.float32) -> None:
+        self.direct = np.empty(len(self.ts), dtype=np.float64)
 
-    # estimate direction by integral
-    def estim(self, current_time_index: int) -> tuple[np.float64, np.float64]:
-        angular_vel = self.sign * math.degrees(self.gyro[current_time_index, AX_INDEX])
-        self.last_direct += (angular_vel - self.sign * param.DRIFT) / param.FREQ    # integrate
+        self.direct[0] = init_direct
+        for i in range(1, len(self.ts)):
+            self.direct[i] = self.direct[i - 1] + self.angular_vel[i - 1] / param.FREQ
 
-        return self.last_direct, angular_vel
-    
-    def get_win_angular_vel(self, current_time_index: int, win_len: np.int16) -> np.float64:
-        angular_vel = np.empty(win_len, dtype=np.float64)
-        
-        for i in reversed(range(win_len)):
-            angular_vel[i] = self.estim(current_time_index - i)[1]
-        
-        return angular_vel.mean()
-    
-    def init_vis(self) -> None:
-        self.vis_direct = np.empty(len(self.ts), dtype=np.float64)
+        print("direction_estimator.py: estimation completed")
 
-        for i in range(len(self.ts)):
-            self.vis_direct[i] = self.estim(i)[0]
-
-        print("direction_estimator.py: direction visualizer has been initialized")
-
-    def run_vis(self, begin: Union[datetime, None] = None, end: Union[datetime, None] = None) -> None:
-        if not hasattr(self, "vis_direct"):
-            raise Exception("direction_estimator.py: direction visualizer hasn't been initialized yet")
-
+    def vis(self, begin: Optional[datetime] = None, end: Optional[datetime] = None) -> None:
         if begin is None:
-            begin = self.ts[0]
+            begin: datetime = self.ts[0]
         if end is None:
-            end = self.ts[-1]
+            end: datetime = self.ts[-1]
 
-        ax = plt.subplots(figsize=(16, 4))[1]
-        ax.set_title("direction")
-        ax.set_xlim((begin, end))
-        ax.plot(self.ts, self.vis_direct)
+        axes: np.ndarray = plt.subplots(nrows=2, figsize=(16, 8))[1]
+        axes[0].set_title("angular velocity")
+        axes[0].set_xlim(left=begin, right=end)
+        axes[0].plot(self.ts, self.angular_vel)
+        axes[1].set_title("direction")
+        axes[1].set_xlim(left=begin, right=end)
+        axes[1].plot(self.ts, self.direct)
 
         plt.show()
+        plt.close()
