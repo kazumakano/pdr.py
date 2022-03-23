@@ -68,12 +68,12 @@ class Log:
         for i, s in enumerate(("accelerometer", "gyroscope")):
             for j in range(3):
                 axes[4*i+j].set_title(f"{s} {('x', 'y', 'z')[j]}")
-                axes[4*i+j].set_xlim((begin, end))
+                axes[4*i+j].set_xlim(left=begin, right=end)
                 if enable_lim:
                     axes[4*i+j].set_ylim(components_lim)
                 axes[4*i+j].plot(self.ts, self.val[:, 3*i+j])
             axes[4*i+3].set_title(f"{s} norm")
-            axes[4*i+3].set_xlim((begin, end))
+            axes[4*i+3].set_xlim(left=begin, right=end)
             if enable_lim:
                 axes[4*i+3].set_ylim(norm_lim)
             axes[4*i+3].plot(self.ts, np.linalg.norm(self.val[:, 3*i:3*i+3], axis=1))
