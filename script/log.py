@@ -13,7 +13,7 @@ class Log:
             raise Exception("log.py: log range is wrong")
 
         self.ts = np.empty(0, dtype=datetime)            # timestamp
-        self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of acceleration meter and gyroscope
+        self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of accelerometer and gyroscope
 
         if file[-4:] == ".csv":
             self._load_csv(begin, end, file)
@@ -65,7 +65,7 @@ class Log:
             end = self.ts[-1]
 
         axes: np.ndarray = plt.subplots(nrows=8, figsize=(16, 32))[1]
-        for i, s in enumerate(("acceleration meter", "gyroscope")):
+        for i, s in enumerate(("accelerometer", "gyroscope")):
             for j in range(3):
                 axes[4*i+j].set_title(f"{s} {('x', 'y', 'z')[j]}")
                 axes[4*i+j].set_xlim((begin, end))
