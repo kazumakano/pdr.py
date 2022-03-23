@@ -65,7 +65,7 @@ class Log:
             end = self.ts[-1]
 
         axes: np.ndarray = plt.subplots(nrows=8, figsize=(16, 32))[1]
-        for i, s in enumerate(("acc", "gyro")):
+        for i, s in enumerate(("acceleration meter", "gyroscope")):
             for j in range(3):
                 axes[4*i+j].set_title(f"{s} {('x', 'y', 'z')[j]}")
                 axes[4*i+j].set_xlim((begin, end))
