@@ -25,10 +25,10 @@ def _set_main_params(conf: dict) -> None:
 
 def pdr(conf: dict[str, Any], enable_show: bool = False) -> None:
     log = Log(BEGIN, END, path.join(param.ROOT_DIR, "log/", LOG_FILE))
+    result_dir = pf_util.make_result_dir(RESULT_DIR_NAME)
     map = Map(result_dir)
     direct = -1 * DirectEstimator(log.val[:, 3:6], log.ts).direct + INIT_DIRECT
     stride = util.meter2pixel(SpeedEstimator(log.val[:, 0:3], log.ts).speed / param.FREQ, map.resolution)
-    result_dir = pf_util.make_result_dir(RESULT_DIR_NAME)
     turtle = Turtle(INIT_POS, INIT_DIRECT)
 
     if pf_param.ENABLE_SAVE_VIDEO:
