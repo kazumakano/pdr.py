@@ -8,7 +8,7 @@ from . import parameter as param
 class DirectEstimator:
     def __init__(self, gyro: np.ndarray, ts: np.ndarray, init_direct: np.float32 = 0) -> None:
         self.ts = ts
-        self.angular_vel = (-1 if param.ROTATE_AX % 2 == 1 else 1) * (np.degrees(gyro[:, (param.ROTATE_AX - 1) // 2]) - param.DRIFT)    # clockwise angular velocity around rotation axis [°/s]
+        self.angular_vel = (1 if param.ROTATE_AX % 2 == 0 else -1) * (np.degrees(gyro[:, (param.ROTATE_AX - 1) // 2]) - param.DRIFT)    # angular velocity around rotation axis [°/s]
         self._estim(init_direct)
 
     # estimate direction by simple integral
