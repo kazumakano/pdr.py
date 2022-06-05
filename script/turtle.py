@@ -8,7 +8,8 @@ class Turtle:
         self.heading = init_heading
 
     def forward(self, dist: np.float64) -> None:
-        self.pos += (dist * np.array((math.cos(math.radians(self.heading)), math.sin(math.radians(self.heading))))).astype(np.float64)
+        radian_heading = math.radians(self.heading)
+        self.pos += dist * np.array((math.cos(radian_heading), math.sin(radian_heading)), dtype=np.float64)
 
     def setheading(self, to_angle: np.float64) -> None:
         self.heading = to_angle
