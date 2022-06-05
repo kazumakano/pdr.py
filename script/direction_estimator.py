@@ -23,17 +23,16 @@ class DirectEstimator:
 
     def vis(self, begin: Optional[datetime] = None, end: Optional[datetime] = None) -> None:
         if begin is None:
-            begin: datetime = self.ts[0]
+            begin = self.ts[0]
         if end is None:
-            end: datetime = self.ts[-1]
+            end = self.ts[-1]
 
-        axes: np.ndarray = plt.subplots(nrows=2, figsize=(16, 8))[1]
+        axes = plt.subplots(nrows=2, figsize=(16, 8))[1]
         axes[0].set_title("angular velocity")
         axes[0].set_xlim(left=begin, right=end)
         axes[0].plot(self.ts, self.angular_vel)
         axes[1].set_title("direction")
         axes[1].set_xlim(left=begin, right=end)
         axes[1].plot(self.ts, self.direct)
-
         plt.show()
         plt.close()
