@@ -5,6 +5,7 @@ import numpy as np
 import particle_filter.script.parameter as pf_param
 import particle_filter.script.utility as pf_util
 import script.parameter as param
+import script.utility as util
 from script.direction_estimator import DirectEstimator
 from script.log import Log
 from script.map import Map
@@ -24,10 +25,10 @@ def _set_main_params(conf: dict) -> None:
 
 def pdr(conf: dict[str, Any], enable_show: bool = False) -> None:
     log = Log(BEGIN, END, path.join(param.ROOT_DIR, "log/", LOG_FILE))
-    direct = -1 * DirectEstimator(log.val[:, 3:6], log.ts).direct + INIT_DIRECT
-    speed = SpeedEstimator(log.val[:, 0:3], log.ts).speed
-    result_dir = pf_util.make_result_dir(RESULT_DIR_NAME)
     map = Map(result_dir)
+    direct = -1 * DirectEstimator(log.val[:, 3:6], log.ts).direct + INIT_DIRECT
+    stride = util.meter2pixel(SpeedEstimator(log.val[:, 0:3], log.ts).speed / param.FREQ, map.resolution)
+    result_dir = pf_util.make_result_dir(RESULT_DIR_NAME)
     turtle = Turtle(INIT_POS, INIT_DIRECT)
 
     if pf_param.ENABLE_SAVE_VIDEO:
@@ -37,7 +38,7 @@ def pdr(conf: dict[str, Any], enable_show: bool = False) -> None:
     for i, t in enumerate(log.ts):
         print(f"main.py: {t.time()}")
 
-        turtle.forward(pf_util.meter2pixel(speed[i], map.resolution) / param.FREQ)
+        turtle.forward(stride[i])
         turtle.set_heading(direct[i])
 
         map.draw_pos(turtle.pos)
