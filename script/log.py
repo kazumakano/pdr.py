@@ -15,12 +15,13 @@ class Log:
         self.ts = np.empty(0, dtype=datetime)            # timestamp
         self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of accelerometer and gyroscope
 
-        if file[-4:] == ".csv":
-            self._load_csv(begin, end, file)
-        elif file[-4:] == ".pkl":
-            self._load_pkl(begin, end, file)
-        else:
-            raise Exception("log.py: only CSV and pickle are supported")
+        match path.splitext(file)[1]:
+            case ".csv":
+                self._load_csv(begin, end, file)
+            case ".pkl":
+                self._load_pkl(begin, end, file)
+            case _:
+                raise Exception("log.py: only CSV and pickle are supported")
 
         print(f"log.py: {path.basename(file)} has been loaded")
         print(f"log.py: log length is {len(self.ts)}")
@@ -37,21 +38,21 @@ class Log:
                 self.val = np.vstack((self.val, [np.float64(v) for v in row[1:7]]))
 
     def _slice(self, begin: datetime, end: datetime) -> None:
-        slice_time_index = len(self.ts)
+        slice_time_idx = len(self.ts)
         for i, t in enumerate(self.ts):
             if t >= begin:
-                slice_time_index = i
+                slice_time_idx = i
                 break
-        self.ts = self.ts[slice_time_index:]
-        self.val = self.val[slice_time_index:]
+        self.ts = self.ts[slice_time_idx:]
+        self.val = self.val[slice_time_idx:]
 
-        slice_time_index = len(self.ts)
+        slice_time_idx = len(self.ts)
         for i, t in enumerate(self.ts):
             if t > end:
-                slice_time_index = i
+                slice_time_idx = i
                 break
-        self.ts = self.ts[:slice_time_index]
-        self.val = self.val[:slice_time_index]
+        self.ts = self.ts[:slice_time_idx]
+        self.val = self.val[:slice_time_idx]
 
     def _load_pkl(self, begin: datetime, end: datetime, file: str) -> None:
         with open(file, mode="rb") as f:
@@ -64,7 +65,7 @@ class Log:
         if end is None:
             end = self.ts[-1]
 
-        axes: np.ndarray = plt.subplots(nrows=8, figsize=(16, 32))[1]
+        axes = plt.subplots(nrows=8, figsize=(16, 32))[1]
         for i, s in enumerate(("accelerometer", "gyroscope")):
             for j in range(3):
                 axes[4*i+j].set_title(f"{s} {('x', 'y', 'z')[j]}")
@@ -77,3 +78,4 @@ class Log:
             if enable_lim:
                 axes[4*i+3].set_ylim(norm_lim)
             axes[4*i+3].plot(self.ts, np.linalg.norm(self.val[:, 3*i:3*i+3], axis=1))
+        plt.close()
