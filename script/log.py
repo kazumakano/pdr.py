@@ -78,4 +78,5 @@ class Log:
             if enable_lim:
                 axes[4*i+3].set_ylim(norm_lim)
             axes[4*i+3].plot(self.ts, np.linalg.norm(self.val[:, 3*i:3*i+3], axis=1))
+        plt.show()
         plt.close()
