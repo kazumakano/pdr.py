@@ -12,9 +12,6 @@ class Log:
         if begin > end:
             raise Exception("log.py: log range is wrong")
 
-        self.ts = np.empty(0, dtype=datetime)            # timestamp
-        self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of accelerometer and gyroscope
-
         match path.splitext(file)[1]:
             case ".csv":
                 self._load_csv(begin, end, file)
@@ -27,6 +24,9 @@ class Log:
         print(f"log.py: log length is {len(self.ts)}")
 
     def _load_csv(self, begin: datetime, end: datetime, file: str) -> None:
+        self.ts = np.empty(0, dtype=datetime)            # timestamp
+        self.val = np.empty((0, 6), dtype=np.float64)    # sensor values of accelerometer and gyroscope
+
         with open(file) as f:
             for row in csv.reader(f):
                 log_datetime = datetime.strptime(row[0], "%Y-%m-%d %H:%M:%S.%f")
